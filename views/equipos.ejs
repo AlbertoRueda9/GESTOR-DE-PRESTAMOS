@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Equipos · Préstamos de material</title>
+</head>
+<body>
+<header>
+  <h1>Equipos informáticos</h1>
+</header>
+<main>
+  <form action="/equipos" method="get">
+    <fieldset>
+      <legend>Buscar y filtrar</legend>
+      <label>Nombre
+        <input type="search" name="q" value="<%= filtros.q %>" maxlength="80">
+      </label>
+      <label>Categoría
+        <select name="categoria">
+          <option value="">Todas</option>
+          <% for (const c of categorias) { %>
+            <option value="<%= c %>" <%= filtros.categoria === c ? 'selected' : '' %>><%= c %></option>
+          <% } %>
+        </select>
+      </label>
+      <label>Estado
+        <select name="estado">
+          <option value="" <%= filtros.estado === '' ? 'selected' : '' %>>Todos</option>
+          <option value="disponible" <%= filtros.estado === 'disponible' ? 'selected' : '' %>>Disponible</option>
+          <option value="prestado" <%= filtros.estado === 'prestado' ? 'selected' : '' %>>Prestado</option>
+        </select>
+      </label>
+      <label>Ordenar por
+        <select name="orden">
+          <option value="codigo" <%= filtros.orden === 'codigo' ? 'selected' : '' %>>Código</option>
+          <option value="nombre" <%= filtros.orden === 'nombre' ? 'selected' : '' %>>Nombre</option>
+        </select>
+      </label>
+      <button type="submit">Aplicar</button>
+      <a href="/equipos">Quitar filtros</a>
+    </fieldset>
+  </form>
+
+  <% if (equipos.length === 0) { %>
+    <p role="status"><strong>No hay equipos que coincidan con los filtros en esta página.</strong></p>
+  <% } else { %>
+    <table>
+      <caption>Página <%= filtros.pagina %></caption>
+      <thead>
+        <tr><th scope="col">Código</th><th scope="col">Nombre</th><th scope="col">Categoría</th><th scope="col">Estado</th></tr>
+      </thead>
+      <tbody>
+        <% for (const e of equipos) { %>
+          <tr>
+            <td><a href="/equipos/<%= e.id %>"><%= e.codigo %></a></td>
+            <td><%= e.nombre %></td>
+            <td><%= e.categoria %></td>
+            <td><%= e.disponible ? 'Disponible' : 'Prestado' %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <nav aria-label="Paginación">
+    <% if (anterior) { %><a href="<%= anterior %>" rel="prev">« Anterior</a><% } %>
+    <% if (siguiente) { %><a href="<%= siguiente %>" rel="next">Siguiente »</a><% } %>
+  </nav>
+</main>
+</body>
+</html>

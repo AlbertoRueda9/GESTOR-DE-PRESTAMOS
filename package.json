@@ -1,0 +1,19 @@
+{
+  "name": "practica-prestamos",
+  "version": "1.0.0",
+  "description": "DWES UD4 - Gestión de préstamos de material informático (Express 5 + pg 8 + EJS 3 + PostgreSQL 18)",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --env-file=.env src/server.mjs",
+    "pruebas": "node --env-file=.env pruebas.mjs"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  }
+}
